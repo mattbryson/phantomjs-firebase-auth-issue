@@ -1,0 +1,51 @@
+<html>
+<head>
+  <style>
+    html {
+      font-family:arial;
+    }
+
+    button {
+      font-size:13px;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script defer src="/__/firebase/4.6.2/firebase-app.js"></script>
+  <script defer src="/__/firebase/4.6.2/firebase-auth.js"></script>
+  <script defer src="/__/firebase/4.6.2/firebase-firestore.js"></script>
+  <script defer src="/__/firebase/4.6.2/firebase-storage.js"></script>
+
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script defer src="/__/firebase/init.js"></script>
+  <script defer src="main.js"></script>
+
+</head>
+<body>
+  <span class="info">
+  <h1>Firebase JS SDK under phantomJS issue</h1>
+  <h2> `signInWithCustomToken` fails under phatomJS</h2>
+  <b>Issue</b>
+  <p>Using the JS SDK `signInWithCustomToken` call fails with <pre>A network error (such as timeout, interrupted connection or unreachable host) has occurred.</pre> but ONLY when running under phantomJS AND on the Firebase Cloud Function Servers.
+  </p>
+
+  <p>Running the same page in the browser works fine, and running the cloud function hosted locally, loading a firebase hosted URL works fine.  Its only when phantomJS is running on the firebase servers does it get the network issues.</p>
+  
+  <p>Interestingly The `REST API` call to validate a token works fine. However the JS SDK does not know the user is then authed. Manually creating the local stoage data 
+  once the token is validated makes the SDK think the user is authed, and it can then make a successfull authed request to private data, but it comes back with an empty collection!  Again, only under </p>
+  
+  <b>Tests</b>
+  <p>Use the tests below to generate a PDF, as well the URL that is used to create the PDF so you can view it in the browser.</p>
+
+  <br/><br/>
+  <button type="button" id="pdf">Create PDF (Auth with SDK)</button>
+  <button type="button" id="pdfRest">Create PDF (Auth with REST API)</button>
+
+  
+</span>
+  
+  <div class="loading">Loading (this will take a few seconds) ...</div>
+  <div id="content"></div>
+
+</body>
+</html>
