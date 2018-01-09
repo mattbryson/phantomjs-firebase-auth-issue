@@ -71,10 +71,7 @@ function authWithRest(token) {
         //grab data out of the token
         var idToken = decodeToken(response.idToken);
 
-        //Now we need to create enough data in local storage so the SDK knows we are authed...
-
-        //mimic the SDK key
-
+        //set the LS key
         var key = 'firebase:authUser:' + apiKey + ':[DEFAULT]';
 
         //mimic the data we need to make the SDK realize we are logged in
@@ -102,11 +99,9 @@ function authWithRest(token) {
         };
 
         //Save to LS 
-        // This will trigger the this.afAuth.authState Observable
-        // which in turn will update the user authed state
         window.localStorage.setItem(key, JSON.stringify(value));
 
-        //Now force browser to tell FB SDK storage has changed
+        // This will let the SDK know the user is actually authed
         window.dispatchEvent(new Event('storage'));
 
         render("<b>Got REST success</b>");
@@ -194,13 +189,12 @@ function getPdf(auth) {
         render('<b>Authed via ' + auth + '</b>');
         render('<a href="' + url + '" target="new">Click here to view the generated PDF</a>');
         render('<a href="' + result.url + '" target="new">Click here to view the pre authed source HTML page</a>');
-
       });
   })
-    .fail(function (error) {
-      $('.loading').hide();
-      render(error);
-    })
+  .fail(function (error) {
+    $('.loading').hide()      
+    render(error);
+  })
 }
 
 
