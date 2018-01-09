@@ -9,12 +9,12 @@ Serving the cloud functions / phantom locally (and still capturing a firebase ho
 
 ## Setup
   * A HTTP cloud function uses pantomJS to capture an authenticated firebase hosted web app.
-  * The cloudFunction creates a custom token with `admin.auth().createCustomToken`.
+  * The cloud function creates a custom token with `admin.auth().createCustomToken`.
   * A url to the hosted firebaseapp app is created, with the token appended as a query param.
   * The URL is given to phantomjs to create a pdf of the page.
   * When the firebase webapp boots, it grabs the token, and uses `firebase.auth().signInWithCustomToken`
   * On success of the sign in, it tells phantom to take the PDF.
-  * The cloud function the saves the pdf in firebase `storage`
+  * The cloud function then saves the pdf in firebase `storage`
   * The http cloud function then returns to the user / web app with the URL of the document.
 
 This all works fine in the browser, but fails under phantom ONLY when hosted on firebase.
